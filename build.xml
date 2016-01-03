@@ -1,50 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="Java4s" basedir="." default="build">
+<project name="SCS" basedir="." default="build">
 
 <property name="src.dir" value="src"/>
 <property name="web.dir" value="WebContent"/>
 <property name="build.dir" value="build/classes"/>
-<property name="name" value="java4s"/>
+<property name="name" value="SCS"/>
 
-<property file ="build.properties"></property>
 
-<taskdef name="start" classname="org.apache.catalina.ant.StartTask">
-<classpath>
-
-<path location="${appserver.home}/lib/catalina-ant.jar"></path>	
-</classpath>
-</taskdef>
-
-<taskdef name="stop" classname="org.apache.catalina.ant.StopTask">
-<classpath>
-
-	<path location="${appserver.home}/lib/catalina-ant.jar"></path>	
-	</classpath>
-	</taskdef>
-
-<target name="start" description="start tomcat server">
-
-<echo>URL is: ${appserver.home},..${appserver.lib},..</echo>
-	
-<start url="${tomcat.manager.url}" 
-	username="${tomcat.manager.username}" 
-	password="${tomcat.manager.password}"
-	path="${name}"/>
-
-</target>
-	
-<target name="stop" description="stop tomcat server">
-
-	<echo>URL is: ${appserver.home},..${appserver.lib},..</echo>
-		
-	<stop url="${tomcat.manager.url}" 
-		username="${tomcat.manager.username}" 
-		password="${tomcat.manager.password}"
-		path="${name}"/>
-
-	</target>
-	
 <path id="master-classpath">
 <fileset dir="${web.dir}/WEB-INF/lib">
 <include name="*.jar"/>
@@ -52,19 +15,34 @@
 <pathelement path="${build.dir}"/>
 </path>
 
+	
+<property file ="build.properties"></property>
+
+<!--Default target when 'ant' is called-->
 <target name="build">
 <echo>*************PROJECT BUILD BEGINS***************</echo>
 <echo>Project name is:${ant.project.name}</echo>
 <echo>Project Path is:${basedir}</echo>
 <echo>Ant version used is: ${ant.version}</echo>
 <echo>Java Version used by ant is: ${ant.java.version}</echo>
-<echo> Apache path is: ${appserver.home}</echo>
+<echo>Apache path is: ${appserver.home}</echo>
+</target>
+	
+<!--To clean compiled codes-->	
+<target name="clean">
+<echo>====Cleaning====</echo>
+<delete>
+<fileset dir="build">
+<include name="**/**"/>
+</fileset>
+</delete>
+<echo>====Cleaned====</echo>
 </target>
 
-
+<!--To compile java classes-->
 <target name="compilejava" depends="build,clean">
 <echo>====Compiling====</echo>	
- <mkdir dir="${build.dir}"/>
+<mkdir dir="${build.dir}"/>
 <echo>Compiling ${src.dir} files..</echo>
 <javac destdir="${build.dir}" 
 	source="1.8" target="1.8" 
@@ -79,23 +57,12 @@
 <echo>====Compiled====</echo>
 </target>
 
-
-<target name="clean">
-<echo>====Cleaning====</echo>
-<delete>
-<fileset dir="build">
-<include name="**/**"/>
-</fileset>
-</delete>
-<echo>====Cleaned====</echo>
-</target>
-
-
-<target name="build-war" depends="clean,compilejava">
+<!--Generate WAR file-->
+<target name="war" depends="clean,compilejava">
 
 <echo>====WAR File Generating====</echo>
 <mkdir dir="target"/>
-<war destfile="target/sky.war" webxml="${web.dir}/WEB-INF/web.xml">
+<war destfile="target/scs.war" webxml="${web.dir}/WEB-INF/web.xml">
 <fileset dir="${web.dir}">
 <include name="**/*.*"/>
 </fileset>
@@ -104,13 +71,21 @@
 <echo>====WAR File Generated====</echo>
 </target>
 
-
-<target name="all" depends="build,clean,compilejava,build-war">
+	
+<!--Process all operations at one target-->
+<target name="all" depends="build,clean,compilejava,war">
 </target>
 
+<target name="usage">
 
-
-
-
-
+	<echo>========================================================</echo>
+	<echo>"ant usage"-> gives info about all ant commands</echo>
+	<echo>"ant build"-> gives info about compilation of SCS</echo>
+	<echo>"ant compilejava"-> compiles all java classes</echo>
+	<echo>"ant clean"-> Deletes all class files and war files</echo>
+	<echo>"ant war"-> Generates war file and stores in target folder</echo>
+	<echo>"ant all"-> Process all the above functions</echo>
+	<echo>========================================================</echo>
+	
+</target>
 </project>
