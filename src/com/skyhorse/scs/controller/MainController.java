@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.skyhorse.scs.Bean.AdminBean;
+import com.skyhorse.scs.Logging.Logging;
 import com.skyhorse.scs.Service.MainService;
 
 @Controller
@@ -20,9 +22,13 @@ public class MainController {
 	@Autowired
 	MainService ms;
 	
+	Logger log = Logger.getLogger(MainController.class);
+	
 	@RequestMapping("/Mainpage")
     public ModelAndView ScsMainpage(@ModelAttribute("admin") AdminBean adm) {
      	
+		Logging.info(log, "****Initial Log check****");
+		
 		System.out.println("entering..");
         return new ModelAndView("home");
     }
