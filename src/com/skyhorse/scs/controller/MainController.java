@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.skyhorse.scs.Bean.AdminBean;
@@ -23,7 +25,10 @@ public class MainController {
 	MainService ms;
 	
 	Logger log = Logger.getLogger(MainController.class);
-	
+	private String host="smtp.gmail.com";
+	private String port="587";
+	private String user="skyhorsetechnologies@gmail.com";
+	private String pass="MecFriends2016";
 	@RequestMapping("/Mainpage")
     public ModelAndView ScsMainpage(@ModelAttribute("admin") AdminBean adm) {
      	
@@ -57,7 +62,8 @@ public class MainController {
 			{
 				System.out.println("Password Matches...");
 				System.out.println("PASSWORD IS "+pwdList.get(i).getPsswd());
-				return new ModelAndView("success");
+				
+				return new ModelAndView("EmailForm");
 			}
 			else{
 				
@@ -69,16 +75,35 @@ public class MainController {
 			
 		}
 		
-		
-		
-		//System.out.println("->"+password.size());
-		//System.out.println("->"+password.indexOf(0));
-		
-		
 		}
 		return new ModelAndView("home");
 		      
     }
 	
+	@RequestMapping("/EmailSend")
+    public ModelAndView ScsEmailpage() {
 	
+		
+		
+		String resultMessage;
+		try {
+			String recipient="mpremkumardpk@gmail.com";
+			String subject="SCS EMAIL";
+			String content="WELCOME TO SCS";
+			com.skyhorse.scs.Email.EmailUtility.sendEmail(host, port, user, pass, recipient, subject,content);
+			resultMessage = "The e-mail was sent successfully";
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			resultMessage = "There were an error: " + ex.getMessage();
+		} 
+		
+		
+		
+		
+		
+		
+		
+		Logging.info(log, "****Email Check****");
+		return new ModelAndView("Result","Message", resultMessage); 
+	}
 }
