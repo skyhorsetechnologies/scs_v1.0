@@ -22,14 +22,7 @@
 		<property name="suffix" value=".jsp" />
 		<property name="viewClass"	value="org.springframework.web.servlet.view.JstlView" />
 	</bean>
-	
-	<!-- DECLARING BEAN CLASSES -->
-	<!-- <bean id="empBean" class="com.Prem.Bsol.Bean.EmployeeBean">
-	    <property name="empId" value=""></property>
-	    <property name="empName" value=""></property>
-	    <property name="address" value=""></property>	
-	</bean>
-	-->
+
 	<bean id="adminBean" class="com.skyhorse.scs.Bean.AdminBean">
 	    <property name="uname" value=""></property>
 	    <property name="psswd" value=""></property>	
@@ -46,4 +39,22 @@
 		
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
+    
+        <!-- JAVA MAIL IMPLEMENTATION -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="skyhorsetechnologies@gmail.com" />
+		<property name="password" value="MecFriends2016" />
+ 
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+    
 </beans>
