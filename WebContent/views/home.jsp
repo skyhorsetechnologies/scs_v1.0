@@ -14,6 +14,10 @@ response.sendRedirect(request.getContextPath() + "/empMain");
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/materialize/js/materialize.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/materialize/css/rippleEffect.css"/>
+
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css"/>
  </head>
 <body>
@@ -21,10 +25,10 @@ response.sendRedirect(request.getContextPath() + "/empMain");
     
 <div class="container formDiv col-xs-offset-1 col-xs-10 col-sm-offset-7 col-sm-4 col-md-offset-4 col-md-4 col-lg-offset-8 col-lg-3">
 
-<form:form role="form" action="scsMain" commandName="admin" method="POST">
+<form:form role="form" id="form1" action="scsMain" commandName="admin" method="POST">
   <div class="row form-group">
    <div class="col-xs-offset-1 col-xs-10 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
-    <form:input type="text" path="uname" class="form-control" placeholder="Username" id="email"></form:input>
+    <form:input type="text" path="uname" class="form-control" placeholder="Username" id="username"></form:input>
     <form:errors Style="color:red;" align="left" path="uname" cssClass="error"/>
     </div>
   </div>
@@ -37,7 +41,7 @@ response.sendRedirect(request.getContextPath() + "/empMain");
   <div class="col-xs-offset-1 col-xs-10 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
     <label><input type="checkbox"> Remember me</label>
 
-  <button type="submit" class="btn btn-success col-xs-offset-3 col-sm-offset-4 col-md-offset-1 col-lg-offset-1">Submit</button>
+	<input type="button" id="btnSubmit" class="waves-effect waves-light btn btn-warning col-xs-offset-3 col-sm-offset-4 col-md-offset-1 col-lg-offset-1" value="Login"/>
 
   </div>
 </form:form>
@@ -61,4 +65,23 @@ border-radius:8px;
 }
 
 </style>
+
+<script>
+$(document).ready(function(){
+	
+	//$('#btnSubmit').attr('value','Login');
+	
+	});
+$('#btnSubmit').click(function(){
+	$('#btnSubmit').attr('disabled',true);
+	$('#btnSubmit').attr('value','Logging in..');
+	
+	//alert("->"+$(this).val());
+	$('#form1').submit();
+});
+
+$(window).load(function(){/* $('#btnSubmit').attr('value','Loading page...'); */});
+
+</script>
+
 </html>

@@ -63,7 +63,9 @@ public class MainController {
 		if (result.hasErrors()) 
 		{
 			 System.out.println("error occurred...");		   
-			 
+		/*	 String url="/Mainpage";
+			 return new ModelAndView("redirect:"+url);
+		 */			 
 			 return new ModelAndView("home");
 		 
 		} 
