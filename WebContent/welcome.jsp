@@ -7,7 +7,7 @@
 <title>Main</title>
 </head>
 <body>
-REDIRECT
+REDIRECTING...PLEASE WAIT..
  <%
 response.sendRedirect(request.getContextPath() + "/Mainpage");
 %> 
